@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,35 +27,6 @@ public class OrderRepository implements IOrderRepository {
         this.databaseConfig = databaseConfig;
         this.userRepository = userRepository;
         this.pizzaRepository = pizzaRepository;
-        createTables();
-    }
-
-    private void createTables() {
-        String ordersSql = "CREATE TABLE IF NOT EXISTS orders (" +
-                "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
-                "user_id BIGINT NOT NULL," +
-                "order_date TIMESTAMP NOT NULL," +
-                "total_price DOUBLE NOT NULL," +
-                "is_completed BOOLEAN NOT NULL," +
-                "earned_bonus_points INT NOT NULL," +
-                "FOREIGN KEY (user_id) REFERENCES users(id)" +
-                ")";
-
-        String orderPizzasSql = "CREATE TABLE IF NOT EXISTS order_pizzas (" +
-                "order_id BIGINT NOT NULL," +
-                "pizza_id BIGINT NOT NULL," +
-                "PRIMARY KEY (order_id, pizza_id)," +
-                "FOREIGN KEY (order_id) REFERENCES orders(id)," +
-                "FOREIGN KEY (pizza_id) REFERENCES pizzas(id)" +
-                ")";
-
-        try (Connection conn = databaseConfig.getConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(ordersSql);
-            stmt.execute(orderPizzasSql);
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to create order tables", e);
-        }
     }
 
     @Override
@@ -119,7 +89,6 @@ public class OrderRepository implements IOrderRepository {
                 throw new SQLException("Updating order failed, no rows affected.");
             }
 
-            // Update order-pizzas
             deleteOrderPizzas(order.getId());
             saveOrderPizzas(order);
 
@@ -183,7 +152,6 @@ public class OrderRepository implements IOrderRepository {
                             rs.getInt("earned_bonus_points")
                     );
 
-                    // Load pizzas
                     loadOrderPizzas(order);
 
                     return Optional.of(order);
@@ -234,7 +202,6 @@ public class OrderRepository implements IOrderRepository {
                             rs.getInt("earned_bonus_points")
                     );
 
-                    // Load pizzas
                     loadOrderPizzas(order);
 
                     orders.add(order);
@@ -271,7 +238,6 @@ public class OrderRepository implements IOrderRepository {
                         rs.getInt("earned_bonus_points")
                 );
 
-                // Load pizzas
                 loadOrderPizzas(order);
 
                 orders.add(order);
@@ -284,10 +250,8 @@ public class OrderRepository implements IOrderRepository {
 
     @Override
     public void deleteById(Long id) {
-        // First delete order-pizzas
         deleteOrderPizzas(id);
 
-        // Then delete order
         String sql = "DELETE FROM orders WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection();

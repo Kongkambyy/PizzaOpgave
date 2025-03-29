@@ -18,22 +18,6 @@ public class ToppingRepository implements IToppingRepository {
 
     public ToppingRepository(DatabaseConfig databaseConfig) {
         this.databaseConfig = databaseConfig;
-        createTable();
-    }
-
-    private void createTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS toppings (" +
-                "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
-                "name VARCHAR(255) NOT NULL," +
-                "price DOUBLE NOT NULL" +
-                ")";
-
-        try (Connection conn = databaseConfig.getConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to create toppings table", e);
-        }
     }
 
     @Override

@@ -19,7 +19,6 @@ public class DatabaseConfig {
 
     public static DatabaseConfig getInstance() {
         if (instance == null) {
-            // Default to MySQL database
             instance = new DatabaseConfig("jdbc:mysql://localhost:3306/pizzaparadise", "root", "root");
         }
         return instance;

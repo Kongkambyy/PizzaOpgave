@@ -57,7 +57,6 @@ public class PizzaController {
 
             redirectAttributes.addFlashAttribute("success", "Custom pizza created successfully");
 
-            // If an order exists in the session, add the pizza to it
             if (session.getAttribute("currentOrderId") != null) {
                 return "redirect:/order/add/" + pizza.getId();
             }

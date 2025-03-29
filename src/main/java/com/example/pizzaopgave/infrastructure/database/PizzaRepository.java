@@ -22,32 +22,6 @@ public class PizzaRepository implements IPizzaRepository {
     public PizzaRepository(DatabaseConfig databaseConfig, IToppingRepository toppingRepository) {
         this.databaseConfig = databaseConfig;
         this.toppingRepository = toppingRepository;
-        createTables();
-    }
-
-    private void createTables() {
-        String pizzaSql = "CREATE TABLE IF NOT EXISTS pizzas (" +
-                "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
-                "name VARCHAR(255) NOT NULL," +
-                "description VARCHAR(255) NOT NULL," +
-                "base_price DOUBLE NOT NULL" +
-                ")";
-
-        String pizzaToppingsSql = "CREATE TABLE IF NOT EXISTS pizza_toppings (" +
-                "pizza_id BIGINT NOT NULL," +
-                "topping_id BIGINT NOT NULL," +
-                "PRIMARY KEY (pizza_id, topping_id)," +
-                "FOREIGN KEY (pizza_id) REFERENCES pizzas(id)," +
-                "FOREIGN KEY (topping_id) REFERENCES toppings(id)" +
-                ")";
-
-        try (Connection conn = databaseConfig.getConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(pizzaSql);
-            stmt.execute(pizzaToppingsSql);
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to create pizza tables", e);
-        }
     }
 
     @Override
@@ -161,7 +135,6 @@ public class PizzaRepository implements IPizzaRepository {
                             rs.getDouble("base_price")
                     );
 
-                    // Load toppings
                     loadPizzaToppings(pizza);
 
                     return Optional.of(pizza);
@@ -208,7 +181,6 @@ public class PizzaRepository implements IPizzaRepository {
                         rs.getDouble("base_price")
                 );
 
-                // Load toppings
                 loadPizzaToppings(pizza);
 
                 pizzas.add(pizza);
@@ -221,10 +193,8 @@ public class PizzaRepository implements IPizzaRepository {
 
     @Override
     public void deleteById(Long id) {
-        // First delete pizza-toppings
         deletePizzaToppings(id);
 
-        // Then delete pizza
         String sql = "DELETE FROM pizzas WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection();

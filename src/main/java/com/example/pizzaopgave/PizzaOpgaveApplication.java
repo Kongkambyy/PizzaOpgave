@@ -27,8 +27,7 @@ import org.springframework.context.annotation.Bean;
 public class PizzaOpgaveApplication {
 
     public static void main(String[] args) {
-        // Initialize the database configuration
-        DatabaseConfig.initialize("jdbc:h2:mem:pizzaparadise", "sa", "");
+        DatabaseConfig.initialize("jdbc:mysql://localhost:3306/pizzaparadise", "root", "root");
 
         SpringApplication.run(PizzaOpgaveApplication.class, args);
     }
@@ -87,27 +86,26 @@ public class PizzaOpgaveApplication {
             toppingRepository.save(new Topping("Pineapple", 8.0));
 
             // Create some pizzas
-            Pizza margherita = pizzaService.createCustomPizza("Margherita", "Classic pizza with tomato sauce and cheese", 50.0);
-            pizzaService.addToppingToPizza(margherita.getId(), 1L); // Cheese
+            Pizza margherita = pizzaService.createCustomPizza("Margherita", "Klassisk pizza med tomat og ost", 50.0);
+            pizzaService.addToppingToPizza(margherita.getId(), 1L);
 
-            Pizza pepperoni = pizzaService.createCustomPizza("Pepperoni", "Pizza with tomato sauce, cheese, and pepperoni", 60.0);
-            pizzaService.addToppingToPizza(pepperoni.getId(), 1L); // Cheese
-            pizzaService.addToppingToPizza(pepperoni.getId(), 2L); // Pepperoni
+            Pizza pepperoni = pizzaService.createCustomPizza("Pepperoni", "Magharita med pepperoni", 60.0);
+            pizzaService.addToppingToPizza(pepperoni.getId(), 1L);
+            pizzaService.addToppingToPizza(pepperoni.getId(), 2L);
 
-            Pizza vegetarian = pizzaService.createCustomPizza("Vegetarian", "Pizza with tomato sauce, cheese, and various vegetables", 65.0);
-            pizzaService.addToppingToPizza(vegetarian.getId(), 1L); // Cheese
-            pizzaService.addToppingToPizza(vegetarian.getId(), 3L); // Mushrooms
-            pizzaService.addToppingToPizza(vegetarian.getId(), 4L); // Onions
-            pizzaService.addToppingToPizza(vegetarian.getId(), 5L); // Bell Peppers
-            pizzaService.addToppingToPizza(vegetarian.getId(), 6L); // Olives
+            Pizza vegetarian = pizzaService.createCustomPizza("Vegetarian", "Skrald pizza, men skal tilbydes", 65.0);
+            pizzaService.addToppingToPizza(vegetarian.getId(), 1L);
+            pizzaService.addToppingToPizza(vegetarian.getId(), 3L);
+            pizzaService.addToppingToPizza(vegetarian.getId(), 4L);
+            pizzaService.addToppingToPizza(vegetarian.getId(), 5L);
+            pizzaService.addToppingToPizza(vegetarian.getId(), 6L);
 
-            Pizza hawaiian = pizzaService.createCustomPizza("Hawaiian", "Pizza with tomato sauce, cheese, ham, and pineapple", 70.0);
-            pizzaService.addToppingToPizza(hawaiian.getId(), 1L); // Cheese
-            pizzaService.addToppingToPizza(hawaiian.getId(), 7L); // Ham
-            pizzaService.addToppingToPizza(hawaiian.getId(), 8L); // Pineapple
+            Pizza hawaiian = pizzaService.createCustomPizza("Hawaiian", "Pizza med tomatsauce, ost og ananas", 70.0);
+            pizzaService.addToppingToPizza(hawaiian.getId(), 1L);
+            pizzaService.addToppingToPizza(hawaiian.getId(), 7L);
+            pizzaService.addToppingToPizza(hawaiian.getId(), 8L);
 
-            // Create a test user
-            User user = new User("Test User", "test@example.com", "password", "123 Test Street");
+            User user = new User("Test User", "test@example.com", "password", "123 test test");
             userService.createUser(user);
         };
     }

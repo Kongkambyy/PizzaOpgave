@@ -18,26 +18,8 @@ public class UserRepository implements IUserRepository {
 
     public UserRepository(DatabaseConfig databaseConfig) {
         this.databaseConfig = databaseConfig;
-        createTable();
     }
 
-    private void createTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS users (" +
-                "id BIGINT AUTO_INCREMENT PRIMARY KEY," +
-                "name VARCHAR(255) NOT NULL," +
-                "email VARCHAR(255) NOT NULL UNIQUE," +
-                "password VARCHAR(255) NOT NULL," +
-                "address VARCHAR(255) NOT NULL," +
-                "bonus_points INT DEFAULT 0" +
-                ")";
-
-        try (Connection conn = databaseConfig.getConnection();
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to create users table", e);
-        }
-    }
 
     @Override
     public User save(User user) {

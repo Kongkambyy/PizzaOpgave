@@ -10,14 +10,12 @@ public class Topping {
         this.price = price;
     }
 
-    // For database retrieval
     public Topping(Long id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
     }
 
-    // Getters and setters
     public Long getId() {
         return id;
     }

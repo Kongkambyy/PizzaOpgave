@@ -17,7 +17,6 @@ public class Pizza {
         this.toppings = new ArrayList<>();
     }
 
-    // For database retrieval
     public Pizza(Long id, String name, String description, double basePrice) {
         this.id = id;
         this.name = name;
@@ -42,7 +41,6 @@ public class Pizza {
         return totalPrice;
     }
 
-    // Getters and setters
     public Long getId() {
         return id;
     }

@@ -20,7 +20,6 @@ public class Order {
         this.isCompleted = false;
     }
 
-    // For database retrieval
     public Order(Long id, User user, LocalDateTime orderDate, double totalPrice, boolean isCompleted, int earnedBonusPoints) {
         this.id = id;
         this.user = user;
@@ -58,10 +57,8 @@ public class Order {
         isCompleted = true;
         calculateBonusPoints();
         user.addBonusPoints(earnedBonusPoints);
-        // Removed: user.addOrder(this); - To prevent circular reference
     }
 
-    // Getters and setters
     public Long getId() {
         return id;
     }
