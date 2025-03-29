@@ -1,11 +1,11 @@
-﻿package com.example.pizzaopgave.infrastructure.database;
+package com.example.pizzaopgave.infrastructure.database;
 
+import com.example.pizzaopgave.domain.Order;
+import com.example.pizzaopgave.domain.Pizza;
 import com.example.pizzaopgave.domain.User;
-import com.example.pizzaopgave.infrastructure.database.DatabaseConfig;
 import com.example.pizzaopgave.infrastructure.interfaces.IOrderRepository;
 import com.example.pizzaopgave.infrastructure.interfaces.IPizzaRepository;
 import com.example.pizzaopgave.infrastructure.interfaces.IUserRepository;
-import org.springframework.core.annotation.Order;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Din ordre</title>
+</head>
+<body>
+<div th:fragment="content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Din aktuelle ordre</h4>
+        </div>
+        <div class="card-body">
+          <div th:if="${#lists.isEmpty(order.pizzas)}" class="text-center py-5">
+            <h5>Din kurv er tom</h5>
+            <p class="text-muted">Tilføj nogle lækre pizzaer for at komme i gang!</p>
+            <a th:href="@{/pizza/menu}" class="btn btn-primary mt-2">Se menu</a>
+          </div>
+
+          <div th:unless="${#lists.isEmpty(order.pizzas)}">
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Pizza</th>
+                <th>Toppings</th>
+                <th class="text-end">Pris</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="pizza : ${order.pizzas}">
+                <td>
+                  <h6 class="mb-0" th:text="${pizza.name}">Pizza Navn</h6>
+                  <small class="text-muted" th:text="${pizza.description}">Beskrivelse</small>
+                </td>
+                <td>
+                  <span th:if="${#lists.isEmpty(pizza.toppings)}" class="text-muted">Ingen ekstra toppings</span>
+                  <small th:unless="${#lists.isEmpty(pizza.toppings)}">
+                                                <span th:each="topping, stat : ${pizza.toppings}">
+                                                    <span th:text="${topping.name}"></span>
+                                                    <span th:unless="${stat.last}">, </span>
+                                                </span>
+                  </small>
+                </td>
+                <td class="text-end" th:text="${'kr ' + pizza.calculatePrice()}">kr 99.00</td>
+                <td class="text-end">
+                  <a th:href="@{'/order/remove/' + ${pizza.id}}" class="btn btn-sm btn-danger">Fjern</a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between align-items-center mt-4">
+              <a th:href="@{/pizza/menu}" class="btn btn-outline-primary">Tilføj flere pizzaer</a>
+              <a th:href="@{/order/checkout}" class="btn btn-success">Gå til kassen</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Ordre oversigt</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-2">
+            <span>Subtotal:</span>
+            <span th:text="${'kr ' + order.totalPrice}">kr 0.00</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span>Leveringsgebyr:</span>
+            <span>kr 0.00</span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between fw-bold">
+            <span>Total:</span>
+            <span class="text-primary" th:text="${'kr ' + order.totalPrice}">kr 0.00</span>
+          </div>
+          <div class="mt-3 text-muted">
+            <small>Du vil optjene <span th:text="${order.calculateBonusPoints()}">0</span> bonuspoint med denne ordre!</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

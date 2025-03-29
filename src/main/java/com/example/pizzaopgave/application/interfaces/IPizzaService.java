@@ -1,4 +1,4 @@
-﻿package com.example.pizzaopgave.application.interfaces;
+package com.example.pizzaopgave.application.interfaces;
 
 import com.example.pizzaopgave.domain.Pizza;
 import com.example.pizzaopgave.domain.Topping;

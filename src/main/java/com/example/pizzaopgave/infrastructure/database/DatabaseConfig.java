@@ -1,4 +1,4 @@
-﻿package com.example.pizzaopgave.infrastructure.database;
+package com.example.pizzaopgave.infrastructure.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,8 +19,8 @@ public class DatabaseConfig {
 
     public static DatabaseConfig getInstance() {
         if (instance == null) {
-            // Default to H2 in-memory database for simplicity
-            instance = new DatabaseConfig("jdbc:mysql://localhost:3306/pizzaparty", "root", "root");
+            // Default to MySQL database
+            instance = new DatabaseConfig("jdbc:mysql://localhost:3306/pizzaparadise", "root", "root");
         }
         return instance;
     }

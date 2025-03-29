@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Min Profil</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Min profil</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h5>Personlige oplysninger</h5>
+                        <p><strong>Navn:</strong> <span th:text="${user.name}">Bruger Navn</span></p>
+                        <p><strong>Email:</strong> <span th:text="${user.email}">bruger@email.com</span></p>
+                        <p><strong>Adresse:</strong> <span th:text="${user.address}">Adresse</span></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h5>Bonuspoint</h5>
+                        <div class="text-center p-3 bg-light rounded">
+                            <div class="display-4 text-primary" th:text="${user.bonusPoints}">0</div>
+                            <p>Optjente point</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Ordrehistorik</h4>
+                </div>
+                <div class="card-body">
+                    <div th:if="${#lists.isEmpty(orderHistory)}" class="text-center py-4">
+                        <p>Du har ingen tidligere ordrer.</p>
+                        <a th:href="@{/pizza/menu}" class="btn btn-primary">Se menu</a>
+                    </div>
+
+                    <div th:unless="${#lists.isEmpty(orderHistory)}">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Ordre ID</th>
+                                    <th>Dato</th>
+                                    <th>Antal pizzaer</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="order : ${orderHistory}">
+                                    <td th:text="${order.id}">1</td>
+                                    <td th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}">01-01-2023 12:00</td>
+                                    <td th:text="${#lists.size(order.pizzas)}">2</td>
+                                    <td th:text="${'kr ' + order.totalPrice}">kr 200.00</td>
+                                    <td>
+                                        <span class="badge bg-success" th:if="${order.completed}">Gennemført</span>
+                                        <span class="badge bg-warning" th:unless="${order.completed}">I gang</span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{'/order/details/' + ${order.id}}" class="btn btn-sm btn-outline-primary">Detaljer</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

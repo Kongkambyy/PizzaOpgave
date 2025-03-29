@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Opret en konto</h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/user/register}" method="post" th:object="${user}">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Fulde navn</label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" th:field="*{password}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Leveringsadresse</label>
+                            <textarea class="form-control" id="address" th:field="*{address}" rows="3" required></textarea>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Registrer</button>
+                            <a th:href="@{/user/login}" class="btn btn-outline-secondary">Har du allerede en konto? Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

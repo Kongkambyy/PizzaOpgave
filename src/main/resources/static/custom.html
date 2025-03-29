@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Lav din egen pizza</title>
+</head>
+<body>
+<div th:fragment="content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Design din pizza</h4>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/pizza/custom}" method="post">
+            <div class="mb-3">
+              <label for="name" class="form-label">Pizza navn</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Giv din pizza et kreativt navn" required>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Beskrivelse</label>
+              <textarea class="form-control" id="description" name="description" rows="2" placeholder="Beskriv din pizza" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="basePrice" class="form-label">Grundpris (kr)</label>
+              <input type="number" class="form-control" id="basePrice" name="basePrice" value="50" min="50" step="5" required>
+              <small class="form-text text-muted">Grundprisen inkluderer dej og tomatsauce. Toppings koster ekstra.</small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Vælg toppings</label>
+              <div class="row">
+                <div class="col-md-4 mb-2" th:each="topping : ${toppings}">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           th:id="${'topping-' + topping.id}"
+                           th:value="${topping.id}"
+                           name="toppingIds">
+                    <label class="form-check-label"
+                           th:for="${'topping-' + topping.id}"
+                           th:text="${topping.name + ' (+kr ' + topping.price + ')'}">
+                      Topping Navn (+kr XX)
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg">Opret pizza</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h5>Tips til en god pizza</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Undgå for mange toppings</li>
+            <li class="list-group-item">Balancer smage (stærk, sød, salt)</li>
+            <li class="list-group-item">Tænk over tekstur kombinationer</li>
+            <li class="list-group-item">Klassiske kombinationer virker ofte bedst</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

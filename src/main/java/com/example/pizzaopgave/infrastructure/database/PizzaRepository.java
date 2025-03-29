@@ -1,4 +1,4 @@
-﻿package com.example.pizzaopgave.infrastructure.database;
+package com.example.pizzaopgave.infrastructure.database;
 
 import com.example.pizzaopgave.domain.Pizza;
 import com.example.pizzaopgave.domain.Topping;

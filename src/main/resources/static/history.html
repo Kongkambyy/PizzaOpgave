@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Ordrehistorik</title>
+</head>
+<body>
+<div th:fragment="content">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Din ordrehistorik</h4>
+    </div>
+    <div class="card-body">
+      <div th:if="${#lists.isEmpty(orders)}" class="text-center py-4">
+        <p>Du har ingen tidligere ordrer.</p>
+        <a th:href="@{/pizza/menu}" class="btn btn-primary">Se menu</a>
+      </div>
+
+      <div th:unless="${#lists.isEmpty(orders)}">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Ordre ID</th>
+              <th>Dato</th>
+              <th>Antal pizzaer</th>
+              <th>Total</th>
+              <th>Bonuspoint</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+              <td th:text="${order.id}">1</td>
+              <td th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}">01-01-2023 12:00</td>
+              <td th:text="${#lists.size(order.pizzas)}">2</td>
+              <td th:text="${'kr ' + order.totalPrice}">kr 200.00</td>
+              <td th:text="${order.earnedBonusPoints}">20</td>
+              <td>
+                <span class="badge bg-success" th:if="${order.completed}">Gennemført</span>
+                <span class="badge bg-warning" th:unless="${order.completed}">I gang</span>
+              </td>
+              <td>
+                <a th:href="@{'/order/details/' + ${order.id}}" class="btn btn-sm btn-outline-primary">Detaljer</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

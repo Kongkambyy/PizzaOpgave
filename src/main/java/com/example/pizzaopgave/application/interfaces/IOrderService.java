@@ -1,6 +1,6 @@
-﻿package com.example.pizzaopgave.application.interfaces;
+package com.example.pizzaopgave.application.interfaces;
 
-import org.springframework.core.annotation.Order;
+import com.example.pizzaopgave.domain.Order;
 
 import java.util.List;
 import java.util.Optional;

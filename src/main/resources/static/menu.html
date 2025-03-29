@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Pizza Menu</title>
+</head>
+<body>
+<div th:fragment="content">
+  <div class="p-4 mb-4 bg-light rounded-3">
+    <h1>Pizza Paradise Menu</h1>
+    <p class="lead">Udforsk vores udvalg af håndlavede pizzaer eller skab din egen.</p>
+    <a th:href="@{/pizza/custom}" class="btn btn-primary">Lav din egen pizza</a>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-4" th:each="pizza : ${pizzas}">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${pizza.name}">Pizza Navn</h5>
+          <p class="card-text" th:text="${pizza.description}">Beskrivelse</p>
+          <p><strong>Toppings:</strong></p>
+          <ul>
+            <li th:each="topping : ${pizza.toppings}" th:text="${topping.name}">Topping</li>
+          </ul>
+        </div>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <span class="text-primary fw-bold" th:text="${'kr ' + pizza.calculatePrice()}">kr 99.00</span>
+          <div>
+            <a th:if="${session.currentOrderId != null}"
+               th:href="@{'/order/add/' + ${pizza.id}}"
+               class="btn btn-primary">Tilføj til ordre</a>
+            <a th:unless="${session.currentOrderId != null}"
+               th:href="@{/order/new}"
+               class="btn btn-primary">Start ordre</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿package com.example.pizzaopgave.domain;
+package com.example.pizzaopgave.domain;
 
 public class Topping {
     private Long id;

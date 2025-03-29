@@ -1,8 +1,10 @@
-﻿package com.example.pizzaopgave.application.implementations;
+package com.example.pizzaopgave.application.implementations;
 
 import com.example.pizzaopgave.application.interfaces.IUserService;
+import com.example.pizzaopgave.domain.Order;
 import com.example.pizzaopgave.domain.User;
-import org.springframework.core.annotation.Order;
+import com.example.pizzaopgave.infrastructure.interfaces.IOrderRepository;
+import com.example.pizzaopgave.infrastructure.interfaces.IUserRepository;
 
 import java.util.List;
 import java.util.Optional;

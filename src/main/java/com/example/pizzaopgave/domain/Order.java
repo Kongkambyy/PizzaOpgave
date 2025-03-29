@@ -1,7 +1,4 @@
-﻿package com.example.pizzaopgave.domain;
-
-import com.example.pizzaopgave.domain.Pizza;
-import com.example.pizzaopgave.domain.User;
+package com.example.pizzaopgave.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -61,7 +58,7 @@ public class Order {
         isCompleted = true;
         calculateBonusPoints();
         user.addBonusPoints(earnedBonusPoints);
-        user.addOrder(this);
+        // Removed: user.addOrder(this); - To prevent circular reference
     }
 
     // Getters and setters
@@ -85,17 +82,8 @@ public class Order {
         return new ArrayList<>(pizzas);
     }
 
-    public void setPizzas(List<Pizza> pizzas) {
-        this.pizzas = new ArrayList<>(pizzas);
-        calculateTotalPrice();
-    }
-
     public LocalDateTime getOrderDate() {
         return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
     }
 
     public double getTotalPrice() {
@@ -112,9 +100,5 @@ public class Order {
 
     public int getEarnedBonusPoints() {
         return earnedBonusPoints;
-    }
-
-    public void setEarnedBonusPoints(int earnedBonusPoints) {
-        this.earnedBonusPoints = earnedBonusPoints;
     }
 }

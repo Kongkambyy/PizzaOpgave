@@ -1,8 +1,10 @@
-﻿package com.example.pizzaopgave.application.implementations;
+package com.example.pizzaopgave.application.implementations;
 
 import com.example.pizzaopgave.application.interfaces.IPizzaService;
 import com.example.pizzaopgave.domain.Pizza;
 import com.example.pizzaopgave.domain.Topping;
+import com.example.pizzaopgave.infrastructure.interfaces.IPizzaRepository;
+import com.example.pizzaopgave.infrastructure.interfaces.IToppingRepository;
 
 import java.util.List;
 import java.util.Optional;
