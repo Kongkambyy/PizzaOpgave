@@ -1,5 +1,7 @@
 Udarbejdet af Joachim Nielsen.
 
+HUSK AT ÅBNE I KODE OG IKKE PREVIEW.
+
 Pizza afleverings opgave. Vil gennemgå vores skriftlige analyse nedenunder.
 
 En kort indledning:
